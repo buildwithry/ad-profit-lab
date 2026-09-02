@@ -139,11 +139,59 @@ input[type="range"] { width: 100%; margin: 18px 0 28px; accent-color: var(--acce
 
 footer { display: flex; justify-content: space-between; gap: 20px; padding: 32px 0 48px; color: var(--muted); font: 10px var(--mono); letter-spacing: .5px; text-transform: uppercase; }
 
+.toolkit { margin-top: 80px; }
+.section-heading { display: flex; align-items: end; justify-content: space-between; gap: 32px; margin-bottom: 24px; }
+.section-heading .eyebrow { margin-bottom: 8px; }
+.section-heading h2 { margin: 0; font-size: 40px; line-height: 1.2; letter-spacing: -.84px; font-weight: 500; }
+.section-heading > p { max-width: 420px; margin: 0 0 4px; color: var(--muted); line-height: 1.55; }
+.tool-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.tool-card { display: flex; flex-direction: column; align-items: stretch; }
+.scorecard-tool { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr); column-gap: 24px; }
+.scorecard-tool .tool-number, .scorecard-tool h3, .scorecard-tool .tool-description { grid-column: 1 / -1; }
+.scorecard-tool .textarea-label { grid-row: span 3; }
+.tool-number { margin-bottom: 22px; color: var(--accent); font: 11px var(--mono); letter-spacing: .8px; text-transform: uppercase; }
+.tool-card h3 { margin: 0; font-size: 24px; line-height: 1.3; letter-spacing: -.6px; font-weight: 500; }
+.tool-description { min-height: 48px; margin: 8px 0 24px; color: var(--muted); font-size: 14px; line-height: 1.55; }
+.tool-fields { display: grid; gap: 14px; }
+.mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 12px; }
+.tool-fields label, .textarea-label { display: grid; gap: 8px; color: var(--muted); font: 10px var(--mono); letter-spacing: .65px; text-transform: uppercase; }
+.tool-fields input, .textarea-label textarea { width: 100%; border: 1px solid var(--border); border-radius: var(--radius); outline: 0; background: var(--elevated); color: var(--white); padding: 12px; font: 14px/1.45 var(--font); text-transform: none; transition: border-color .18s ease; }
+.tool-fields input:focus, .textarea-label textarea:focus { border-color: var(--accent); }
+.textarea-label textarea { min-height: 220px; resize: vertical; }
+.primary-button { margin-top: 20px; border: 0; border-radius: var(--radius); background: var(--white); color: var(--canvas); padding: 11px 16px; font-size: 13px; font-weight: 600; cursor: pointer; transition: opacity .18s ease, transform .18s ease; }
+.primary-button:hover { opacity: .88; }
+.primary-button:active { transform: translateY(1px); }
+.output-stack { display: grid; gap: 1px; margin-top: 20px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--border); }
+.hook-result { display: grid; grid-template-columns: 90px 1fr auto; align-items: start; gap: 12px; padding: 14px; background: var(--elevated); }
+.hook-type { color: var(--accent); font: 9px var(--mono); letter-spacing: .6px; text-transform: uppercase; }
+.hook-result p { margin: 0; font-size: 13px; line-height: 1.5; }
+.inline-copy, .copy-button { border: 1px solid var(--smoke); border-radius: 4px; background: transparent; color: var(--muted); padding: 5px 7px; font: 9px var(--mono); letter-spacing: .5px; text-transform: uppercase; cursor: pointer; }
+.inline-copy:hover, .copy-button:hover { border-color: var(--accent); color: var(--white); }
+.url-output { min-height: 86px; margin-top: 20px; padding: 14px; overflow-wrap: anywhere; border: 1px solid var(--border); border-radius: var(--radius); background: var(--elevated); color: var(--muted); font: 12px/1.55 var(--mono); }
+.url-output.has-value { color: var(--white); }
+.copy-button { align-self: flex-start; margin-top: 8px; }
+.copy-button:disabled { opacity: .35; cursor: not-allowed; }
+.score-output { display: flex; align-items: center; gap: 18px; padding: 18px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--elevated); }
+.score-ring { flex: 0 0 82px; height: 82px; display: grid; place-content: center; text-align: center; border: 1px solid var(--accent); border-radius: 50%; }
+.score-ring strong { display: block; font: 500 25px var(--mono); }
+.score-ring span { display: block; color: var(--muted); font: 9px var(--mono); }
+.score-output p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
+.check-list { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 1px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--border); }
+.check-list li { display: grid; grid-template-columns: 10px 1fr; gap: 10px; padding: 11px 12px; background: var(--card); color: var(--muted); font-size: 12px; line-height: 1.45; }
+.check-list li::before { content: ""; width: 7px; height: 7px; margin-top: 5px; border: 1px solid var(--smoke); border-radius: 50%; }
+.check-list li.pass { color: var(--white); }
+.check-list li.pass::before { border-color: var(--accent); background: var(--accent); }
+
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; gap: 24px; padding-top: 64px; }
   .hero-copy { max-width: 620px; }
   .workspace, .lower-grid { grid-template-columns: 1fr; }
   .inputs-panel { order: 0; }
+  .section-heading { align-items: start; flex-direction: column; gap: 12px; }
+  .tool-grid { grid-template-columns: 1fr; }
+  .scorecard-tool { grid-column: auto; grid-template-columns: 1fr; }
+  .scorecard-tool .tool-number, .scorecard-tool h3, .scorecard-tool .tool-description { grid-column: auto; }
+  .scorecard-tool .textarea-label { grid-row: auto; }
 }
 
 @media (max-width: 620px) {
@@ -159,6 +207,10 @@ footer { display: flex; justify-content: space-between; gap: 20px; padding: 32px
   .verdict-top { align-items: flex-end; }
   .funnel-row { grid-template-columns: 78px 1fr 78px; gap: 8px; }
   .scenario-comparison { grid-template-columns: 1fr; }
+  .mini-grid { grid-template-columns: 1fr; }
+  .hook-result { grid-template-columns: 70px 1fr; }
+  .hook-result .inline-copy { grid-column: 2; justify-self: start; }
+  .section-heading h2 { font-size: 32px; }
   .action-list li { grid-template-columns: 28px 1fr; }
   .impact { display: none; }
   footer { flex-direction: column; }
@@ -167,4 +219,3 @@ footer { display: flex; justify-content: space-between; gap: 20px; padding: 32px
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
 }
-

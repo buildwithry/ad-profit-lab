@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Model paid campaign economics and get a prioritized action plan in seconds.">
-  <title>Ad Profit Lab — Campaign Decision Engine</title>
+  <title>Ad Profit Lab — Fast Marketing Toolkit</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@
     </a>
     <div class="topbar-meta">
       <span class="live-dot"></span>
-      <span>Decision engine live</span>
+      <span>4 tools / no setup</span>
     </div>
     <button class="ghost-button" id="resetButton" type="button">Reset scenario</button>
   </header>
@@ -31,7 +31,7 @@
         <p class="eyebrow">Campaign economics / v1.0</p>
         <h1>Know if the campaign can scale <span>before it burns budget.</span></h1>
       </div>
-      <p class="hero-copy">Enter the numbers you know. The model calculates your funnel, break-even targets, and the next move a media buyer should make.</p>
+      <p class="hero-copy">Model campaign economics, generate ad angles, build tracked links, and diagnose landing-page copy—all in one fast workspace.</p>
     </section>
 
     <section class="workspace" aria-label="Campaign calculator">
@@ -171,8 +171,69 @@
       </section>
     </section>
 
+    <section class="toolkit" id="toolkit">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Fast-ship toolkit</p>
+          <h2>Three more tools. Zero setup.</h2>
+        </div>
+        <p>Built for the repetitive thinking that slows down campaign launches.</p>
+      </div>
+
+      <div class="tool-grid">
+        <section class="panel tool-card hook-tool">
+          <div class="tool-number">02 / Offer angles</div>
+          <h3>Hook Forge</h3>
+          <p class="tool-description">Turn one offer into six testable ad angles without starting from a blank page.</p>
+          <div class="tool-fields">
+            <label>Product or offer<input id="hookProduct" type="text" value="At-home teeth whitening kit"></label>
+            <label>Target audience<input id="hookAudience" type="text" value="Busy professionals"></label>
+            <label>Main outcome<input id="hookOutcome" type="text" value="A brighter smile in 10 minutes"></label>
+            <label>Proof or differentiator<input id="hookProof" type="text" value="Dentist-formulated, sensitivity-safe"></label>
+          </div>
+          <button class="primary-button" id="generateHooks" type="button">Generate angles</button>
+          <div class="output-stack" id="hookOutput" aria-live="polite"></div>
+        </section>
+
+        <section class="panel tool-card utm-tool">
+          <div class="tool-number">03 / Attribution</div>
+          <h3>Campaign Link Builder</h3>
+          <p class="tool-description">Build clean UTM links for ads, emails, creators, and affiliate placements.</p>
+          <div class="tool-fields">
+            <label>Landing page URL<input id="utmUrl" type="url" value="https://example.com/offer"></label>
+            <div class="mini-grid">
+              <label>Source<input id="utmSource" type="text" value="facebook"></label>
+              <label>Medium<input id="utmMedium" type="text" value="paid-social"></label>
+              <label>Campaign<input id="utmCampaign" type="text" value="summer-launch"></label>
+              <label>Creative<input id="utmContent" type="text" value="video-hook-01"></label>
+            </div>
+          </div>
+          <button class="primary-button" id="buildUtm" type="button">Build tracked URL</button>
+          <div class="url-output" id="utmOutput" aria-live="polite">
+            <span>Your campaign URL will appear here.</span>
+          </div>
+          <button class="copy-button" data-copy-target="utmOutput" type="button" disabled>Copy URL</button>
+        </section>
+
+        <section class="panel tool-card scorecard-tool">
+          <div class="tool-number">04 / Conversion audit</div>
+          <h3>Landing Page Scorecard</h3>
+          <p class="tool-description">Paste your page copy and get an instant conversion-readiness check.</p>
+          <label class="textarea-label">Landing page copy
+            <textarea id="pageCopy" rows="10" placeholder="Paste the hero, offer, proof, CTA, and guarantee here..."></textarea>
+          </label>
+          <button class="primary-button" id="scorePage" type="button">Analyze page copy</button>
+          <div class="score-output" id="scoreOutput" aria-live="polite">
+            <div class="score-ring"><strong>—</strong><span>/ 100</span></div>
+            <p>Add your copy to see the biggest conversion gaps.</p>
+          </div>
+          <ul class="check-list" id="pageChecks"></ul>
+        </section>
+      </div>
+    </section>
+
     <footer>
-      <span>Built for fast campaign decisions.</span>
+      <span>Built for fast marketing decisions.</span>
       <span>Model assumptions are estimates—not guarantees.</span>
     </footer>
   </main>
@@ -180,4 +241,3 @@
   <script src="app.js"></script>
 </body>
 </html>
-

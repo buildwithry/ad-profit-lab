@@ -1,7 +1,7 @@
 # Ad Profit Lab
 
-A fast, standalone campaign-profit calculator built as a work-sample for an AI
-vibe-coder role in affiliate marketing.
+A fast, standalone marketing toolkit built as a work-sample for an AI vibe-coder
+role in affiliate marketing.
 
 ## Run it
 
@@ -23,6 +23,9 @@ Then visit `http://127.0.0.1:4173/`.
 - Funnel visualization
 - Prioritized, rule-based media-buyer recommendations
 - Scale scenario modeling
+- Offer-angle and ad-hook generation
+- UTM campaign link building
+- Landing-page conversion scorecard
 - Responsive, accessible frontend with no framework dependency
 
 The recommendations are intentionally described as a decision engine, not an

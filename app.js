@@ -151,3 +151,104 @@ document.querySelectorAll("[data-preset]").forEach((button) => {
 
 render();
 
+const hookTemplates = [
+  ["Problem", ({ audience, outcome }) => `${audience}: still trying everything for ${outcome.toLowerCase()}? Start here.`],
+  ["Speed", ({ outcome, product }) => `${outcome}—without adding another complicated routine. Meet ${product}.`],
+  ["Proof", ({ proof, outcome }) => `${proof}. Built for one job: ${outcome.toLowerCase()}.`],
+  ["Contrarian", ({ product, audience }) => `Most ${product.toLowerCase()} options were not made for ${audience.toLowerCase()}. This one was.`],
+  ["Curiosity", ({ audience, product }) => `Why are ${audience.toLowerCase()} switching to this ${product.toLowerCase()}?`],
+  ["Direct", ({ outcome, proof }) => `Get ${outcome.toLowerCase()}. ${proof}. See how it works.`],
+];
+
+async function copyText(text, button) {
+  try {
+    await navigator.clipboard.writeText(text);
+    const original = button.textContent;
+    button.textContent = "Copied";
+    setTimeout(() => { button.textContent = original; }, 1200);
+  } catch {
+    button.textContent = "Select + copy";
+  }
+}
+
+function cleanSlug(value) {
+  return value.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+
+function generateHooks() {
+  const data = {
+    product: document.querySelector("#hookProduct").value.trim() || "your offer",
+    audience: document.querySelector("#hookAudience").value.trim() || "your audience",
+    outcome: document.querySelector("#hookOutcome").value.trim() || "the result they want",
+    proof: document.querySelector("#hookProof").value.trim() || "designed around the outcome",
+  };
+  const output = document.querySelector("#hookOutput");
+  output.innerHTML = hookTemplates.map(([type, template]) => {
+    const hook = template(data);
+    return `<article class="hook-result"><span class="hook-type">${type}</span><p>${hook}</p><button class="inline-copy" type="button">Copy</button></article>`;
+  }).join("");
+  output.querySelectorAll(".inline-copy").forEach((button) => {
+    button.addEventListener("click", () => copyText(button.previousElementSibling.textContent, button));
+  });
+}
+
+function buildUtm() {
+  const output = document.querySelector("#utmOutput");
+  const copyButton = document.querySelector('[data-copy-target="utmOutput"]');
+  try {
+    const url = new URL(document.querySelector("#utmUrl").value.trim());
+    const params = {
+      utm_source: document.querySelector("#utmSource").value,
+      utm_medium: document.querySelector("#utmMedium").value,
+      utm_campaign: document.querySelector("#utmCampaign").value,
+      utm_content: document.querySelector("#utmContent").value,
+    };
+    Object.entries(params).forEach(([key, value]) => {
+      const cleaned = cleanSlug(value);
+      if (cleaned) url.searchParams.set(key, cleaned);
+    });
+    output.textContent = url.toString();
+    output.classList.add("has-value");
+    copyButton.disabled = false;
+  } catch {
+    output.textContent = "Enter a complete URL, including https://";
+    output.classList.remove("has-value");
+    copyButton.disabled = true;
+  }
+}
+
+const pageSignals = [
+  { label: "Specific outcome", points: 20, test: (copy) => /\d|increase|save|grow|reduce|faster|more|without/i.test(copy) },
+  { label: "Clear call to action", points: 20, test: (copy) => /buy|shop|book|start|get|join|claim|try|apply|schedule/i.test(copy) },
+  { label: "Proof or credibility", points: 20, test: (copy) => /review|rated|customer|client|trusted|case study|result|testimonial|proven/i.test(copy) },
+  { label: "Risk reversal", points: 15, test: (copy) => /guarantee|refund|risk.free|cancel anytime|money back|trial/i.test(copy) },
+  { label: "Audience or problem clarity", points: 15, test: (copy) => /you|your|struggling|tired|problem|for .* who|designed for/i.test(copy) },
+  { label: "Urgency or reason to act", points: 10, test: (copy) => /today|now|limited|ends|deadline|spots|before|bonus/i.test(copy) },
+];
+
+function scorePage() {
+  const copy = document.querySelector("#pageCopy").value.trim();
+  const output = document.querySelector("#scoreOutput");
+  const checks = document.querySelector("#pageChecks");
+  if (!copy) {
+    output.innerHTML = '<div class="score-ring"><strong>—</strong><span>/ 100</span></div><p>Paste your landing-page copy first.</p>';
+    checks.innerHTML = "";
+    return;
+  }
+  const results = pageSignals.map((signal) => ({ ...signal, pass: signal.test(copy) }));
+  const score = results.reduce((total, signal) => total + (signal.pass ? signal.points : 0), 0);
+  const missing = results.filter((signal) => !signal.pass).map((signal) => signal.label.toLowerCase());
+  const verdict = score >= 80 ? "Strong conversion foundation. Test the offer and creative match next." : score >= 55 ? `Good start. The biggest gaps are ${missing.slice(0, 2).join(" and ")}.` : `The page needs a clearer selling structure. Start with ${missing.slice(0, 2).join(" and ")}.`;
+  output.innerHTML = `<div class="score-ring"><strong>${score}</strong><span>/ 100</span></div><p>${verdict}</p>`;
+  checks.innerHTML = results.map((signal) => `<li class="${signal.pass ? "pass" : ""}">${signal.label} <span>· ${signal.points} pts</span></li>`).join("");
+}
+
+document.querySelector("#generateHooks").addEventListener("click", generateHooks);
+document.querySelector("#buildUtm").addEventListener("click", buildUtm);
+document.querySelector("#scorePage").addEventListener("click", scorePage);
+document.querySelectorAll("[data-copy-target]").forEach((button) => {
+  button.addEventListener("click", () => copyText(document.querySelector(`#${button.dataset.copyTarget}`).textContent.trim(), button));
+});
+
+generateHooks();
+buildUtm();
