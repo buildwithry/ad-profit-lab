@@ -23,6 +23,7 @@ Then visit `http://127.0.0.1:4173/`.
 - Funnel visualization
 - Prioritized, rule-based media-buyer recommendations
 - Scale scenario modeling
+- Channel-specific marketing copywriting prompt builder
 - Offer-angle and ad-hook generation
 - UTM campaign link building
 - Landing-page conversion scorecard

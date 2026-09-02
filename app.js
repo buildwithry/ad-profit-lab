@@ -175,6 +175,53 @@ function cleanSlug(value) {
   return value.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
 
+const channelRequirements = {
+  "Meta Ad": ["3 primary-text variations using distinct angles", "5 short headlines", "2 descriptions", "Label the awareness level and angle for each variation"],
+  "Landing Page": ["Hero headline, subheadline, and primary CTA", "Problem, solution, benefits, and proof sections", "Objection handling and risk reversal", "A final CTA section"],
+  "Email Sequence": ["A 5-email sequence", "Subject line, preheader, body, and CTA for every email", "Label each email's purpose in the sequence", "Build urgency without inventing scarcity"],
+  "VSL Script": ["Pattern-interrupt hook", "Problem, unique mechanism, proof, offer, and objection handling", "Natural transitions and spoken-language pacing", "A direct closing CTA"],
+  "Google Search Ad": ["15 headlines, each no longer than 30 characters", "4 descriptions, each no longer than 90 characters", "Group the copy by search intent", "Keep every claim consistent with the supplied proof"],
+};
+
+function promptValue(selector, fallback) {
+  return document.querySelector(selector).value.trim() || fallback;
+}
+
+function generatePrompt() {
+  const channel = promptValue("#promptChannel", "Marketing campaign");
+  const goal = promptValue("#promptGoal", "drive action");
+  const offer = promptValue("#promptOffer", "[describe the offer]");
+  const audience = promptValue("#promptAudience", "[describe the audience]");
+  const pain = promptValue("#promptPain", "[describe the core pain or desire]");
+  const proof = promptValue("#promptProof", "No proof supplied—do not invent claims");
+  const tone = promptValue("#promptTone", "Clear and direct");
+  const cta = promptValue("#promptCta", "[state the call to action]");
+  const requirements = channelRequirements[channel] || ["Complete, channel-ready copy"];
+
+  const prompt = `You are a senior direct-response copywriter. Write conversion-focused ${channel} copy designed to ${goal.toLowerCase()}.
+
+CAMPAIGN BRIEF
+Offer: ${offer}
+Audience: ${audience}
+Core pain or desire: ${pain}
+Proof available: ${proof}
+Tone: ${tone}
+Call to action: ${cta}
+
+OUTPUT REQUIREMENTS
+${requirements.map((item) => `- ${item}`).join("\n")}
+- Lead with a specific problem, desired outcome, or useful tension—not a generic introduction
+- Make the offer and next step immediately clear
+- Use concrete language and varied sentence lengths
+- Do not invent testimonials, statistics, guarantees, features, or scarcity
+- Avoid clichés, hype, filler, and unsupported superlatives
+- Preserve the supplied tone while prioritizing clarity
+
+Before writing, silently identify the audience's likely awareness level, strongest objection, and most credible angle. Return only the finished copy, clearly labeled and ready to publish.`;
+
+  document.querySelector("#promptOutput").textContent = prompt;
+}
+
 function generateHooks() {
   const data = {
     product: document.querySelector("#hookProduct").value.trim() || "your offer",
@@ -244,11 +291,13 @@ function scorePage() {
 }
 
 document.querySelector("#generateHooks").addEventListener("click", generateHooks);
+document.querySelector("#generatePrompt").addEventListener("click", generatePrompt);
 document.querySelector("#buildUtm").addEventListener("click", buildUtm);
 document.querySelector("#scorePage").addEventListener("click", scorePage);
 document.querySelectorAll("[data-copy-target]").forEach((button) => {
   button.addEventListener("click", () => copyText(document.querySelector(`#${button.dataset.copyTarget}`).textContent.trim(), button));
 });
 
+generatePrompt();
 generateHooks();
 buildUtm();

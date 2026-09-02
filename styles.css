@@ -26,7 +26,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-button, input { font: inherit; }
+button, input, select, textarea { font: inherit; }
 button { color: inherit; }
 
 .grid-wash {
@@ -146,6 +146,13 @@ footer { display: flex; justify-content: space-between; gap: 20px; padding: 32px
 .section-heading > p { max-width: 420px; margin: 0 0 4px; color: var(--muted); line-height: 1.55; }
 .tool-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .tool-card { display: flex; flex-direction: column; align-items: stretch; }
+.prompt-tool { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, .9fr) minmax(360px, 1.1fr); gap: 28px; }
+.prompt-inputs { min-width: 0; }
+.prompt-result { min-width: 0; display: flex; flex-direction: column; padding: 18px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--elevated); }
+.output-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
+.output-heading span { color: var(--muted); font: 10px var(--mono); letter-spacing: .65px; text-transform: uppercase; }
+.output-heading .copy-button { flex: 0 0 auto; margin: 0; }
+.prompt-output { flex: 1; min-height: 470px; margin: 0; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--white); font: 12px/1.7 var(--mono); }
 .scorecard-tool { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr); column-gap: 24px; }
 .scorecard-tool .tool-number, .scorecard-tool h3, .scorecard-tool .tool-description { grid-column: 1 / -1; }
 .scorecard-tool .textarea-label { grid-row: span 3; }
@@ -155,8 +162,9 @@ footer { display: flex; justify-content: space-between; gap: 20px; padding: 32px
 .tool-fields { display: grid; gap: 14px; }
 .mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 12px; }
 .tool-fields label, .textarea-label { display: grid; gap: 8px; color: var(--muted); font: 10px var(--mono); letter-spacing: .65px; text-transform: uppercase; }
-.tool-fields input, .textarea-label textarea { width: 100%; border: 1px solid var(--border); border-radius: var(--radius); outline: 0; background: var(--elevated); color: var(--white); padding: 12px; font: 14px/1.45 var(--font); text-transform: none; transition: border-color .18s ease; }
-.tool-fields input:focus, .textarea-label textarea:focus { border-color: var(--accent); }
+.tool-fields input, .tool-fields select, .tool-fields textarea, .textarea-label textarea { width: 100%; border: 1px solid var(--border); border-radius: var(--radius); outline: 0; background: var(--elevated); color: var(--white); padding: 12px; font: 14px/1.45 var(--font); text-transform: none; transition: border-color .18s ease; }
+.tool-fields textarea { resize: vertical; }
+.tool-fields input:focus, .tool-fields select:focus, .tool-fields textarea:focus, .textarea-label textarea:focus { border-color: var(--accent); }
 .textarea-label textarea { min-height: 220px; resize: vertical; }
 .primary-button { margin-top: 20px; border: 0; border-radius: var(--radius); background: var(--white); color: var(--canvas); padding: 11px 16px; font-size: 13px; font-weight: 600; cursor: pointer; transition: opacity .18s ease, transform .18s ease; }
 .primary-button:hover { opacity: .88; }
@@ -189,6 +197,8 @@ footer { display: flex; justify-content: space-between; gap: 20px; padding: 32px
   .inputs-panel { order: 0; }
   .section-heading { align-items: start; flex-direction: column; gap: 12px; }
   .tool-grid { grid-template-columns: 1fr; }
+  .prompt-tool { grid-column: auto; grid-template-columns: 1fr; }
+  .prompt-output { min-height: 380px; }
   .scorecard-tool { grid-column: auto; grid-template-columns: 1fr; }
   .scorecard-tool .tool-number, .scorecard-tool h3, .scorecard-tool .tool-description { grid-column: auto; }
   .scorecard-tool .textarea-label { grid-row: auto; }

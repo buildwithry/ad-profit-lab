@@ -20,7 +20,7 @@
     </a>
     <div class="topbar-meta">
       <span class="live-dot"></span>
-      <span>4 tools / no setup</span>
+      <span>5 tools / no setup</span>
     </div>
     <button class="ghost-button" id="resetButton" type="button">Reset scenario</button>
   </header>
@@ -175,14 +175,56 @@
       <div class="section-heading">
         <div>
           <p class="eyebrow">Fast-ship toolkit</p>
-          <h2>Three more tools. Zero setup.</h2>
+          <h2>Four more tools. Zero setup.</h2>
         </div>
         <p>Built for the repetitive thinking that slows down campaign launches.</p>
       </div>
 
       <div class="tool-grid">
+        <section class="panel tool-card prompt-tool">
+          <div class="prompt-inputs">
+            <div class="tool-number">02 / AI copy brief</div>
+            <h3>Marketing Copy Prompt Builder</h3>
+            <p class="tool-description">Turn a rough campaign brief into a structured, channel-specific prompt for Claude or ChatGPT.</p>
+            <div class="tool-fields">
+              <div class="mini-grid">
+                <label>Channel
+                  <select id="promptChannel">
+                    <option>Meta Ad</option><option>Landing Page</option><option>Email Sequence</option><option>VSL Script</option><option>Google Search Ad</option>
+                  </select>
+                </label>
+                <label>Campaign goal
+                  <select id="promptGoal">
+                    <option>Generate qualified leads</option><option>Drive purchases</option><option>Book sales calls</option><option>Launch a new product</option><option>Retarget warm visitors</option>
+                  </select>
+                </label>
+              </div>
+              <label>Offer<input id="promptOffer" type="text" value="Free 30-minute CRM automation audit"></label>
+              <label>Audience<input id="promptAudience" type="text" value="Agency owners losing leads to slow follow-up"></label>
+              <label>Core pain or desire<textarea id="promptPain" rows="3">Leads go cold before the sales team responds, creating wasted ad spend and missed revenue.</textarea></label>
+              <div class="mini-grid">
+                <label>Proof<input id="promptProof" type="text" value="Automated follow-up launches in under 60 seconds"></label>
+                <label>Tone
+                  <select id="promptTone">
+                    <option>Direct and punchy</option><option>Conversational</option><option>Premium</option><option>Urgent</option><option>Educational</option>
+                  </select>
+                </label>
+              </div>
+              <label>Call to action<input id="promptCta" type="text" value="Book your free audit"></label>
+            </div>
+            <button class="primary-button" id="generatePrompt" type="button">Build copywriting prompt</button>
+          </div>
+          <div class="prompt-result">
+            <div class="output-heading">
+              <span>Ready for your AI workspace</span>
+              <button class="copy-button" data-copy-target="promptOutput" type="button">Copy prompt</button>
+            </div>
+            <pre class="prompt-output" id="promptOutput" aria-live="polite"></pre>
+          </div>
+        </section>
+
         <section class="panel tool-card hook-tool">
-          <div class="tool-number">02 / Offer angles</div>
+          <div class="tool-number">03 / Offer angles</div>
           <h3>Hook Forge</h3>
           <p class="tool-description">Turn one offer into six testable ad angles without starting from a blank page.</p>
           <div class="tool-fields">
@@ -196,7 +238,7 @@
         </section>
 
         <section class="panel tool-card utm-tool">
-          <div class="tool-number">03 / Attribution</div>
+          <div class="tool-number">04 / Attribution</div>
           <h3>Campaign Link Builder</h3>
           <p class="tool-description">Build clean UTM links for ads, emails, creators, and affiliate placements.</p>
           <div class="tool-fields">
@@ -216,7 +258,7 @@
         </section>
 
         <section class="panel tool-card scorecard-tool">
-          <div class="tool-number">04 / Conversion audit</div>
+          <div class="tool-number">05 / Conversion audit</div>
           <h3>Landing Page Scorecard</h3>
           <p class="tool-description">Paste your page copy and get an instant conversion-readiness check.</p>
           <label class="textarea-label">Landing page copy
