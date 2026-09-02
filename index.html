@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Model paid campaign economics and get a prioritized action plan in seconds.">
+  <title>Ad Profit Lab — Campaign Decision Engine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="grid-wash" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Ad Profit Lab home">
+      <span class="brand-mark">A</span>
+      <span>Ad Profit Lab</span>
+    </a>
+    <div class="topbar-meta">
+      <span class="live-dot"></span>
+      <span>Decision engine live</span>
+    </div>
+    <button class="ghost-button" id="resetButton" type="button">Reset scenario</button>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Campaign economics / v1.0</p>
+        <h1>Know if the campaign can scale <span>before it burns budget.</span></h1>
+      </div>
+      <p class="hero-copy">Enter the numbers you know. The model calculates your funnel, break-even targets, and the next move a media buyer should make.</p>
+    </section>
+
+    <section class="workspace" aria-label="Campaign calculator">
+      <aside class="panel inputs-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Inputs</p>
+            <h2>Campaign model</h2>
+          </div>
+          <span class="step-badge">01</span>
+        </div>
+
+        <form id="campaignForm">
+          <div class="field-row">
+            <label for="budget">Ad spend <span>USD / month</span></label>
+            <div class="number-field"><b>$</b><input id="budget" name="budget" type="number" min="1" step="100" value="10000"></div>
+          </div>
+          <div class="field-grid">
+            <div class="field-row">
+              <label for="cpm">CPM <span>per 1,000</span></label>
+              <div class="number-field"><b>$</b><input id="cpm" name="cpm" type="number" min="0.01" step="0.1" value="28"></div>
+            </div>
+            <div class="field-row">
+              <label for="ctr">CTR <span>link click</span></label>
+              <div class="number-field"><input id="ctr" name="ctr" type="number" min="0.01" step="0.1" value="1.8"><b>%</b></div>
+            </div>
+            <div class="field-row">
+              <label for="cvr">Conversion rate <span>click to sale</span></label>
+              <div class="number-field"><input id="cvr" name="cvr" type="number" min="0.01" step="0.1" value="3.2"><b>%</b></div>
+            </div>
+            <div class="field-row">
+              <label for="aov">Average order <span>revenue</span></label>
+              <div class="number-field"><b>$</b><input id="aov" name="aov" type="number" min="0.01" step="1" value="145"></div>
+            </div>
+            <div class="field-row">
+              <label for="cogs">Product cost <span>% of revenue</span></label>
+              <div class="number-field"><input id="cogs" name="cogs" type="number" min="0" max="99" step="1" value="32"><b>%</b></div>
+            </div>
+            <div class="field-row">
+              <label for="refund">Refund rate <span>lost revenue</span></label>
+              <div class="number-field"><input id="refund" name="refund" type="number" min="0" max="99" step="0.5" value="6"><b>%</b></div>
+            </div>
+          </div>
+        </form>
+
+        <div class="preset-row" aria-label="Example presets">
+          <span>Load example</span>
+          <button type="button" data-preset="ecommerce">E-commerce</button>
+          <button type="button" data-preset="leadgen">Lead gen</button>
+          <button type="button" data-preset="affiliate">Affiliate</button>
+        </div>
+      </aside>
+
+      <div class="results-column">
+        <section class="panel verdict-panel" aria-live="polite">
+          <div class="verdict-top">
+            <div>
+              <p class="eyebrow">Decision</p>
+              <div class="verdict-line">
+                <span class="signal" id="signal"></span>
+                <h2 id="verdict">Scale carefully</h2>
+              </div>
+            </div>
+            <div class="confidence">
+              <span>Margin of safety</span>
+              <strong id="safetyMargin">18.2%</strong>
+            </div>
+          </div>
+
+          <div class="metric-grid">
+            <article class="metric-card featured">
+              <span>Net profit</span>
+              <strong id="netProfit">$0</strong>
+              <small id="profitDelta">After ad spend and product cost</small>
+            </article>
+            <article class="metric-card">
+              <span>Revenue</span>
+              <strong id="revenue">$0</strong>
+              <small id="orders">0 estimated orders</small>
+            </article>
+            <article class="metric-card">
+              <span>ROAS</span>
+              <strong id="roas">0.00×</strong>
+              <small id="breakEvenRoas">0.00× break-even</small>
+            </article>
+            <article class="metric-card">
+              <span>Cost per sale</span>
+              <strong id="cpa">$0</strong>
+              <small id="breakEvenCpa">$0 break-even CPA</small>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel chart-panel">
+          <div class="panel-heading compact">
+            <div>
+              <p class="eyebrow">Funnel</p>
+              <h2>Where the money moves</h2>
+            </div>
+            <span class="annotation" id="cpcLabel">$0 CPC</span>
+          </div>
+          <div class="funnel" id="funnel"></div>
+        </section>
+      </div>
+    </section>
+
+    <section class="lower-grid">
+      <section class="panel actions-panel">
+        <div class="panel-heading compact">
+          <div>
+            <p class="eyebrow">Priority queue</p>
+            <h2>What to do next</h2>
+          </div>
+          <span class="step-badge">02</span>
+        </div>
+        <ol class="action-list" id="actionList"></ol>
+      </section>
+
+      <section class="panel scenario-panel">
+        <div class="panel-heading compact">
+          <div>
+            <p class="eyebrow">Scale simulation</p>
+            <h2>What if spend goes up?</h2>
+          </div>
+          <span class="step-badge">03</span>
+        </div>
+        <div class="scale-control">
+          <label for="scaleRange">Budget increase <strong id="scaleValue">+25%</strong></label>
+          <input id="scaleRange" type="range" min="0" max="100" step="5" value="25">
+        </div>
+        <div class="scenario-comparison">
+          <div><span>Projected spend</span><strong id="scaledSpend">$0</strong></div>
+          <div><span>Projected revenue</span><strong id="scaledRevenue">$0</strong></div>
+          <div><span>Projected profit</span><strong id="scaledProfit">$0</strong></div>
+        </div>
+        <p class="scenario-note" id="scenarioNote"></p>
+      </section>
+    </section>
+
+    <footer>
+      <span>Built for fast campaign decisions.</span>
+      <span>Model assumptions are estimates—not guarantees.</span>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
+
